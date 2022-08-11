@@ -13,6 +13,7 @@ import {
   HStack,
   Checkbox,
   Divider,
+  VStack,
 } from "@chakra-ui/react";
 import resetIcon from "./assets/reset_icon.png";
 import closeIcon from "./assets/close_icon.png";
@@ -43,7 +44,7 @@ function App() {
           </HStack>
         </Flex>
 
-        <FormControl>
+        <FormControl mt={4}>
           <FormLabel fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
             Basic Salary
           </FormLabel>
@@ -57,8 +58,13 @@ function App() {
           />
         </FormControl>
 
-        <FormControl>
-          <FormLabel fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
+        <FormControl mt={4}>
+          <FormLabel
+            fontFamily={"inter"}
+            fontWeight={"600"}
+            fontSize={"16px"}
+            mb={0}
+          >
             Earnings
           </FormLabel>
           <Text
@@ -66,6 +72,7 @@ function App() {
             fontWeight={"400"}
             fontSize={"12px"}
             color="#757575"
+            mb={2}
           >
             Allowance, Fixed Allowance, Bonus and etc.
           </Text>
@@ -99,7 +106,7 @@ function App() {
               EPF/ETF
             </Checkbox>
           </Flex>
-          <Flex>
+          <Flex mb={3}>
             <Input
               type="number"
               w={"380px"}
@@ -130,6 +137,7 @@ function App() {
               EPF/ETF
             </Checkbox>
           </Flex>
+
           <Flex mt={5}>
             <Image src={addIcon} w="14px" h={"14px"} />
             <Text
@@ -146,12 +154,8 @@ function App() {
 
         <Divider mt={2} mb={2} />
 
-        <FormControl>
-          <FormLabel
-            fontFamily={"inter"}
-            fontWeight={"600"}
-            fontSize={"16px"}
-          >
+        <FormControl mt={4}>
+          <FormLabel fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
             Deductions
           </FormLabel>
           <Text
@@ -159,6 +163,7 @@ function App() {
             fontWeight={"400"}
             fontSize={"12px"}
             color="#757575"
+            mb={2}
           >
             Salary Advances, Loan Deductions and all
           </Text>
@@ -184,6 +189,7 @@ function App() {
               </Center>
             </Box>
           </Flex>
+
           <Flex mt={5}>
             <Image src={addIcon} w="14px" h={"14px"} />
             <Text
@@ -201,8 +207,144 @@ function App() {
         </FormControl>
       </Box>
 
-      <Box flex="2" bg="tomato">
-        <Text>Box 3</Text>
+      <Box
+        flex="2"
+        bg={"#FFFFFF"}
+        borderRadius={"8px"}
+        border={"1px"}
+        borderColor={"#E0E0E0"}
+      >
+        <Box padding={8}>
+          <Text
+            fontFamily={"inter"}
+            fontWeight={"700"}
+            fontSize={"20px"}
+            mb={4}
+          >
+            Your salary
+          </Text>
+          <Flex mb={2}>
+            <Text
+              fontFamily={"inter"}
+              fontWeight={"600"}
+              fontSize={"14px"}
+              color={"#757575"}
+            >
+              Items
+            </Text>
+            <Spacer />
+            <Text
+              fontFamily={"inter"}
+              fontWeight={"600"}
+              fontSize={"14px"}
+              color={"#757575"}
+            >
+              Amount
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Basic Salary
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              100,000.00
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Gross Earning
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              30,000.00
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Gross Deduction
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              5,000.00
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Employee EPF (8%)
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              8,800.00
+            </Text>
+          </Flex>
+        </Box>
+
+        <Box
+          bg={"#FFFFFF"}
+          borderRadius={"4px"}
+          border={"1px"}
+          borderColor={"#E0E0E0"}
+          padding={3}
+          mx={5}
+        >
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
+              Net Salary (Take Home)
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              116,200.00
+            </Text>
+          </Flex>
+        </Box>
+
+        <Box padding={8}>
+          <Flex mb={2}>
+            <Text
+              fontFamily={"inter"}
+              fontWeight={"600"}
+              fontSize={"14px"}
+              color={"#757575"}
+            >
+              Contribution from the Employer
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Employeer EPF (12%)
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              13,200.00
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              Employeer ETF (3%)
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+              3,300.00
+            </Text>
+          </Flex>
+
+          <Flex mt={4}>
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+            CTC (Cost to Company)
+            </Text>
+            <Spacer />
+            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+            141,500.00
+            </Text>
+          </Flex>
+        </Box>
       </Box>
     </Flex>
   );
