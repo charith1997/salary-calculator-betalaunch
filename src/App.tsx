@@ -1,7 +1,6 @@
 import "./App.css";
 import {
   Flex,
-  FormHelperText,
   Input,
   FormLabel,
   FormControl,
@@ -13,13 +12,39 @@ import {
   HStack,
   Checkbox,
   Divider,
-  VStack,
+  list,
 } from "@chakra-ui/react";
 import resetIcon from "./assets/reset_icon.png";
 import closeIcon from "./assets/close_icon.png";
 import addIcon from "./assets/add_icon.png";
+import { useState } from "react";
 
 function App() {
+  const [allowances, setAllowances] = useState([
+    { allowance: 0.0, epf: false },
+  ]);
+  const [deductions, setDeductions] = useState([{ deduction: 0.0 }]);
+
+  const addNewAllowanceHandler = () => {
+    setAllowances([...allowances, { allowance: 0.0, epf: false }]);
+  };
+
+  const removeAllowanceHandler = (index: number) => {
+    let allowanceList = [...allowances];
+    allowanceList.splice(index, 1);
+    setAllowances(allowanceList);
+  };
+
+  const addNewDeductionHandler = () => {
+    setDeductions([...deductions, { deduction: 0.0 }]);
+  };
+
+  const removeDeductionHandler = (index: number) => {
+    let deductionList = [...deductions];
+    deductionList.splice(index, 1);
+    setDeductions(deductionList);
+  };
+
   return (
     <Flex padding={"100"}>
       <Box
@@ -31,82 +56,28 @@ function App() {
         padding={"8"}
         me={5}
       >
-        <Flex>
-          <Text fontSize="20px" fontFamily={"inter"} fontWeight={"700"}>
-            Calculate Your Salary
-          </Text>
-          <Spacer />
-          <HStack>
-            <Image src={resetIcon} w={"21px"} h={"18px"} />
-            <Text fontFamily={"inter"} fontSize={"14px"} color={"#0052EA"}>
-              Reset
+        <form>
+          <Flex>
+            <Text fontSize="20px" fontFamily={"inter"} fontWeight={"700"}>
+              Calculate Your Salary
             </Text>
-          </HStack>
-        </Flex>
+            <Spacer />
+            <HStack>
+              <Image src={resetIcon} w={"21px"} h={"18px"} />
+              <Text fontFamily={"inter"} fontSize={"14px"} color={"#0052EA"}>
+                Reset
+              </Text>
+            </HStack>
+          </Flex>
 
-        <FormControl mt={4}>
-          <FormLabel fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
-            Basic Salary
-          </FormLabel>
-          <Input
-            type="number"
-            w={"380px"}
-            h={"48px"}
-            borderRadius={"4px"}
-            bg={"#FFFFFF"}
-            borderColor="#E0E0E0"
-          />
-        </FormControl>
-
-        <FormControl mt={4}>
-          <FormLabel
-            fontFamily={"inter"}
-            fontWeight={"600"}
-            fontSize={"16px"}
-            mb={0}
-          >
-            Earnings
-          </FormLabel>
-          <Text
-            fontFamily={"inter"}
-            fontWeight={"400"}
-            fontSize={"12px"}
-            color="#757575"
-            mb={2}
-          >
-            Allowance, Fixed Allowance, Bonus and etc.
-          </Text>
-          <Flex mb={3}>
-            <Input
-              type="number"
-              w={"380px"}
-              h={"48px"}
-              borderRadius={"4px"}
-              bg={"#FFFFFF"}
-              borderColor="#E0E0E0"
-            />
-            <Box
-              ms={"2"}
-              w={"32px"}
-              h={"32px"}
-              bg="#EFEFEF"
-              boxSizing="border-box"
-              borderRadius={"20px"}
-            >
-              <Center>
-                <Image src={closeIcon} w="12px" h="12px" mt={"2.5"} />
-              </Center>
-            </Box>
-            <Checkbox
-              ms={5}
+          <FormControl mt={4}>
+            <FormLabel
               fontFamily={"inter"}
-              fontWeight={"400"}
+              fontWeight={"600"}
               fontSize={"16px"}
             >
-              EPF/ETF
-            </Checkbox>
-          </Flex>
-          <Flex mb={3}>
+              Basic Salary
+            </FormLabel>
             <Input
               type="number"
               w={"380px"}
@@ -115,96 +86,161 @@ function App() {
               bg={"#FFFFFF"}
               borderColor="#E0E0E0"
             />
-            <Box
-              ms={"2"}
-              w={"32px"}
-              h={"32px"}
-              bg="#EFEFEF"
-              boxSizing="border-box"
-              borderRadius={"20px"}
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel
+              fontFamily={"inter"}
+              fontWeight={"600"}
+              fontSize={"16px"}
+              mb={0}
             >
-              <Center>
-                <Image src={closeIcon} w="12px" h="12px" mt={"2.5"} />
-              </Center>
-            </Box>
-            <Checkbox
-              ms={5}
+              Earnings
+            </FormLabel>
+            <Text
               fontFamily={"inter"}
               fontWeight={"400"}
+              fontSize={"12px"}
+              color="#757575"
+              mb={2}
+            >
+              Allowance, Fixed Allowance, Bonus and etc.
+            </Text>
+
+            {allowances.map((newAllowance: any, index: number) => (
+              <Flex mb={3} key={index}>
+                <Input
+                  type="number"
+                  w={"380px"}
+                  h={"48px"}
+                  borderRadius={"4px"}
+                  bg={"#FFFFFF"}
+                  borderColor="#E0E0E0"
+                />
+                <Box
+                  ms={"2"}
+                  w={"32px"}
+                  h={"32px"}
+                  bg="#EFEFEF"
+                  boxSizing="border-box"
+                  borderRadius={"20px"}
+                >
+                  <button
+                    type="button"
+                    onClick={() => removeAllowanceHandler(index)}
+                  >
+                    <Center>
+                      <Image
+                        src={closeIcon}
+                        w="12px"
+                        h="12px"
+                        mt={"2.5"}
+                        ms={"2.5"}
+                      />
+                    </Center>
+                  </button>
+                </Box>
+                <Checkbox
+                  ms={5}
+                  fontFamily={"inter"}
+                  fontWeight={"400"}
+                  fontSize={"16px"}
+                >
+                  EPF/ETF
+                </Checkbox>
+              </Flex>
+            ))}
+          </FormControl>
+
+          <button type="button" onClick={addNewAllowanceHandler}>
+            <Flex mt={5}>
+              <Image src={addIcon} w="14px" h={"14px"} />
+              <Text
+                fontFamily={"inter"}
+                fontWeight={"500"}
+                fontSize={"14px"}
+                color={"#0052EA"}
+                ms={2}
+              >
+                Add New Allowance
+              </Text>
+            </Flex>
+          </button>
+
+          <Divider mt={2} mb={2} />
+
+          <FormControl mt={4}>
+            <FormLabel
+              fontFamily={"inter"}
+              fontWeight={"600"}
               fontSize={"16px"}
-              defaultChecked
             >
-              EPF/ETF
-            </Checkbox>
-          </Flex>
-
-          <Flex mt={5}>
-            <Image src={addIcon} w="14px" h={"14px"} />
+              Deductions
+            </FormLabel>
             <Text
               fontFamily={"inter"}
-              fontWeight={"500"}
-              fontSize={"14px"}
-              color={"#0052EA"}
-              ms={2}
+              fontWeight={"400"}
+              fontSize={"12px"}
+              color="#757575"
+              mb={2}
             >
-              Add New Allowance
+              Salary Advances, Loan Deductions and all
             </Text>
-          </Flex>
-        </FormControl>
 
-        <Divider mt={2} mb={2} />
+            {deductions.map((singleDeduction: any, index: number) => (
+              <Flex mb={3} key={index}>
+                <Input
+                  type="number"
+                  w={"380px"}
+                  h={"48px"}
+                  borderRadius={"4px"}
+                  bg={"#FFFFFF"}
+                  borderColor="#E0E0E0"
+                />
+                <Box
+                  ms={"2"}
+                  w={"32px"}
+                  h={"32px"}
+                  bg="#EFEFEF"
+                  boxSizing="border-box"
+                  borderRadius={"20px"}
+                >
+                  <button
+                    type="button"
+                    onClick={() => removeDeductionHandler(index)}
+                  >
+                    <Center>
+                      <Image
+                        src={closeIcon}
+                        w="12px"
+                        h="12px"
+                        mt={"2.5"}
+                        ms={"2.5"}
+                      />
+                    </Center>
+                  </button>
+                </Box>
+              </Flex>
+            ))}
 
-        <FormControl mt={4}>
-          <FormLabel fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
-            Deductions
-          </FormLabel>
-          <Text
-            fontFamily={"inter"}
-            fontWeight={"400"}
-            fontSize={"12px"}
-            color="#757575"
-            mb={2}
-          >
-            Salary Advances, Loan Deductions and all
-          </Text>
-          <Flex mb={3}>
-            <Input
-              type="number"
-              w={"380px"}
-              h={"48px"}
-              borderRadius={"4px"}
-              bg={"#FFFFFF"}
-              borderColor="#E0E0E0"
-            />
-            <Box
-              ms={"2"}
-              w={"32px"}
-              h={"32px"}
-              bg="#EFEFEF"
-              boxSizing="border-box"
-              borderRadius={"20px"}
-            >
-              <Center>
-                <Image src={closeIcon} w="12px" h="12px" mt={"2.5"} />
-              </Center>
-            </Box>
-          </Flex>
-
-          <Flex mt={5}>
-            <Image src={addIcon} w="14px" h={"14px"} />
-            <Text
-              fontFamily={"inter"}
-              fontStyle={"normal"}
-              fontWeight={"500"}
-              fontSize={"14px"}
-              lineHeight={"20px"}
-              color={"#0052EA"}
-              ms={2}
-            >
-              Add New Deduction
-            </Text>
-          </Flex>
-        </FormControl>
+            <button type="button" onClick={addNewDeductionHandler}>
+              <Flex mt={5}>
+                <Image src={addIcon} w="14px" h={"14px"} />
+                <Text
+                  fontFamily={"inter"}
+                  fontStyle={"normal"}
+                  fontWeight={"500"}
+                  fontSize={"14px"}
+                  lineHeight={"20px"}
+                  color={"#0052EA"}
+                  ms={2}
+                >
+                  Add New Deduction
+                </Text>
+              </Flex>
+            </button>
+          </FormControl>
+        </form>
       </Box>
 
       <Box
@@ -337,11 +373,11 @@ function App() {
 
           <Flex mt={4}>
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-            CTC (Cost to Company)
+              CTC (Cost to Company)
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-            141,500.00
+              141,500.00
             </Text>
           </Flex>
         </Box>
