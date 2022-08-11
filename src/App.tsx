@@ -12,7 +12,6 @@ import {
   HStack,
   Checkbox,
   Divider,
-  list,
 } from "@chakra-ui/react";
 import resetIcon from "./assets/reset_icon.png";
 import closeIcon from "./assets/close_icon.png";
@@ -21,28 +20,52 @@ import { useState } from "react";
 
 function App() {
   const [allowances, setAllowances] = useState([
-    { allowance: 0.0, epf: false },
+    { allowance: "", epf: false },
   ]);
-  const [deductions, setDeductions] = useState([{ deduction: 0.0 }]);
+  const [deductions, setDeductions] = useState([{ deduction: "" }]);
+
+  console.log(allowances, "+++++");
+  console.log(deductions, "----");
 
   const addNewAllowanceHandler = () => {
-    setAllowances([...allowances, { allowance: 0.0, epf: false }]);
+    setAllowances([...allowances, { allowance: "", epf: false }]);
   };
 
   const removeAllowanceHandler = (index: number) => {
-    let allowanceList = [...allowances];
+    const allowanceList = [...allowances];
     allowanceList.splice(index, 1);
     setAllowances(allowanceList);
   };
 
   const addNewDeductionHandler = () => {
-    setDeductions([...deductions, { deduction: 0.0 }]);
+    setDeductions([...deductions, { deduction: "" }]);
   };
 
   const removeDeductionHandler = (index: number) => {
-    let deductionList = [...deductions];
+    const deductionList = [...deductions];
     deductionList.splice(index, 1);
     setDeductions(deductionList);
+  };
+
+  const allowanceChangeHandler = (event: any, index: number) => {
+    const { name, value } = event.target;
+    const list: any = [...allowances];
+    list[index][name] = value;
+    setAllowances(list);
+  };
+
+  const checkboxChangeHandler = (event: any, index: number) => {
+    const { name, checked } = event.target;
+    const list: any = [...allowances];
+    list[index][name] = checked;
+    setAllowances(list);
+  };
+
+  const deductionChangeHandler = (event: any, index: number) => {
+    const { name, value } = event.target;
+    const list: any = [...deductions];
+    list[index][name] = value;
+    setDeductions(list);
   };
 
   return (
@@ -116,6 +139,10 @@ function App() {
                   borderRadius={"4px"}
                   bg={"#FFFFFF"}
                   borderColor="#E0E0E0"
+                  name="allowance"
+                  id="allowance"
+                  value={newAllowance.allowance}
+                  onChange={(e: any) => allowanceChangeHandler(e, index)}
                 />
                 <Box
                   ms={"2"}
@@ -145,6 +172,9 @@ function App() {
                   fontFamily={"inter"}
                   fontWeight={"400"}
                   fontSize={"16px"}
+                  name="epf"
+                  id="epf"
+                  onChange={(e: any) => checkboxChangeHandler(e, index)}
                 >
                   EPF/ETF
                 </Checkbox>
@@ -196,6 +226,10 @@ function App() {
                   borderRadius={"4px"}
                   bg={"#FFFFFF"}
                   borderColor="#E0E0E0"
+                  name="deduction"
+                  id="deduction"
+                  value={singleDeduction.deduction}
+                  onChange={(e: any) => deductionChangeHandler(e, index)}
                 />
                 <Box
                   ms={"2"}
