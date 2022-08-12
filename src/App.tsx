@@ -145,9 +145,9 @@ function App() {
   };
 
   return (
-    <Flex padding={"100"}>
+    <Flex padding={"100"} flexDirection={{ base: "column", md: "row" }}>
       <Box
-        flex="2"
+        w={{base: '100%', md: '60%'}}
         borderRadius={"8px"}
         bg="#FAFAFA"
         border={"1px"}
@@ -183,7 +183,7 @@ function App() {
               type="number"
               min="0.01"
               step="0.01"
-              w={"380px"}
+              w={{base: '300px', md: "380px"}}
               h={"48px"}
               borderRadius={"4px"}
               bg={"#FFFFFF"}
@@ -363,7 +363,7 @@ function App() {
       </Box>
 
       <Box
-        flex="2"
+        w={{base: '100%', md: '40%'}}
         bg={"#FFFFFF"}
         borderRadius={"8px"}
         border={"1px"}
