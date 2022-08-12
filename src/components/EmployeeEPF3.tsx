@@ -1,10 +1,11 @@
-import {
-    Flex,
-    Spacer,
-    Text,
-  } from "@chakra-ui/react";
+import { Flex, Spacer, Text } from "@chakra-ui/react";
 
 const EmployeeEPF3 = (props: any) => {
+  const calcETF8: any = (
+    ((parseFloat(props.basicSalary) + parseFloat(props.totalOfEPFAllowed)) *
+      3) /
+    100
+  ).toFixed(2);
   return (
     <>
       <Flex>
@@ -13,12 +14,8 @@ const EmployeeEPF3 = (props: any) => {
         </Text>
         <Spacer />
         <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-          {props.totalOfEPFAllowed == "" && "0.00"}
-          {props.totalOfEPFAllowed != "" &&
-            (
-              ((parseFloat(props.basicSalary) + parseFloat(props.totalOfEPFAllowed)) * 3) /
-              100
-            ).toFixed(2)}
+          {props.totalOfEPFAllowed != null && props.basicSalary == "" && "0.00"}
+          {props.basicSalary != "" && calcETF8}
         </Text>
       </Flex>
     </>

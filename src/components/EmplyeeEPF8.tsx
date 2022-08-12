@@ -15,9 +15,7 @@ const EmployeeEPF8 = (props: any) => {
         <Spacer />
         <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
           {props.totalOfEPFAllowed != null && props.basicSalary == "" && "0.00"}
-          {props.basicSalary != "" &&
-            props.totalOfEPFAllowed != "" &&
-            calcEPF8Total}
+          {props.basicSalary != "" && calcEPF8Total}
         </Text>
       </Flex>
     </>
