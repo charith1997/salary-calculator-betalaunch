@@ -1,8 +1,4 @@
-import {
-    Flex,
-    Spacer,
-    Text,
-  } from "@chakra-ui/react";
+import { Flex, Spacer, Text } from "@chakra-ui/react";
 
 const GrossDeduction = (props: any) => {
   return (
@@ -14,7 +10,8 @@ const GrossDeduction = (props: any) => {
         <Spacer />
         <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
           {props.grossDeductions == "" && "0.00"}
-          {props.grossDeductions != "" && parseFloat(props.grossDeductions).toFixed(2)}
+          {props.grossDeductions != "" &&
+            parseFloat(props.grossDeductions).toFixed(2)}
         </Text>
       </Flex>
     </>

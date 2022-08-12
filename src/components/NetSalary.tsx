@@ -18,8 +18,9 @@ const NetSalary = (props: any) => {
         </Text>
         <Spacer />
         <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
+          {props.basicSalary == "null" && "0.00"}
           {props.basicSalary == "" && "0.00"}
-          {props.basicSalary != "" && calcNetSalary}
+          {props.basicSalary > 0 && calcNetSalary}
         </Text>
       </Flex>
     </>
