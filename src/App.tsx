@@ -19,13 +19,15 @@ import addIcon from "./assets/add_icon.png";
 import { useState } from "react";
 
 function App() {
-  const [allowances, setAllowances] = useState([
-    { allowance: "", epf: false },
-  ]);
+  const [allowances, setAllowances] = useState([{ allowance: "", epf: false }]);
   const [deductions, setDeductions] = useState([{ deduction: "" }]);
+  const [basicSalary, setBasicSalary] = useState("");
+  const [grossEarnings, setGrossEarning] = useState("");
+  const [grossDeductions, setGrossDeductions] = useState("");
+  const [totalOfEPFAllowed, setTotalOfEPFAllowed] = useState("");
 
-  console.log(allowances, "+++++");
-  console.log(deductions, "----");
+  console.log(basicSalary, "basicSalary");
+  console.log(totalOfEPFAllowed, "totalOfEPFAllowed");
 
   const addNewAllowanceHandler = () => {
     setAllowances([...allowances, { allowance: "", epf: false }]);
@@ -35,6 +37,8 @@ function App() {
     const allowanceList = [...allowances];
     allowanceList.splice(index, 1);
     setAllowances(allowanceList);
+    calculateGrossEarning(allowanceList);
+    calculateTotalOfEPFAllowed(allowanceList);
   };
 
   const addNewDeductionHandler = () => {
@@ -45,6 +49,7 @@ function App() {
     const deductionList = [...deductions];
     deductionList.splice(index, 1);
     setDeductions(deductionList);
+    calculateGrossDeduction(deductionList);
   };
 
   const allowanceChangeHandler = (event: any, index: number) => {
@@ -52,6 +57,8 @@ function App() {
     const list: any = [...allowances];
     list[index][name] = value;
     setAllowances(list);
+    calculateGrossEarning(list);
+    calculateTotalOfEPFAllowed(list);
   };
 
   const checkboxChangeHandler = (event: any, index: number) => {
@@ -59,6 +66,7 @@ function App() {
     const list: any = [...allowances];
     list[index][name] = checked;
     setAllowances(list);
+    calculateTotalOfEPFAllowed(list);
   };
 
   const deductionChangeHandler = (event: any, index: number) => {
@@ -66,6 +74,60 @@ function App() {
     const list: any = [...deductions];
     list[index][name] = value;
     setDeductions(list);
+    calculateGrossDeduction(list);
+  };
+
+  const basicSalaryChangeHandler = (event: any) => {
+    setBasicSalary(event.target.value);
+  };
+
+  const calculateGrossEarning = (allowances: any) => {
+    let earnings: any = allowances.map((item: any) =>
+      parseFloat(item.allowance).toFixed(2)
+    );
+
+    let sum: any = 0;
+
+    for (let i = 0; i < earnings.length; i++) {
+      if (earnings[i] > 0) {
+        sum += parseFloat(earnings[i]);
+      }
+    }
+
+    setGrossEarning(sum);
+  };
+
+  const calculateGrossDeduction = (deducts: any) => {
+    let deductions: any = deducts.map((item: any) =>
+      parseFloat(item.deduction).toFixed(2)
+    );
+
+    let sum: any = 0;
+
+    for (let i = 0; i < deductions.length; i++) {
+      if (deductions[i] > 0) {
+        sum += parseFloat(deductions[i]);
+      }
+    }
+
+    setGrossDeductions(sum);
+  };
+
+  const calculateTotalOfEPFAllowed = (totalGrossEarning: any) => {
+    let epfList: any = totalGrossEarning.filter((i: any) => i.epf == true);
+    let newEPFList: any = epfList.map((i: any) =>
+      parseFloat(i.allowance).toFixed(2)
+    );
+
+    let totalAllowedEPF: any = 0;
+
+    for (let i = 0; i < newEPFList.length; i++) {
+      if (newEPFList[i] > 0) {
+        totalAllowedEPF += parseFloat(newEPFList[i]);
+      }
+    }
+
+    setTotalOfEPFAllowed(totalAllowedEPF);
   };
 
   return (
@@ -103,11 +165,17 @@ function App() {
             </FormLabel>
             <Input
               type="number"
+              min="0.01"
+              step="0.01"
               w={"380px"}
               h={"48px"}
               borderRadius={"4px"}
               bg={"#FFFFFF"}
               borderColor="#E0E0E0"
+              name="basic_salary"
+              id="basic_salary"
+              onChange={basicSalaryChangeHandler}
+              value={basicSalary}
             />
           </FormControl>
 
@@ -174,6 +242,7 @@ function App() {
                   fontSize={"16px"}
                   name="epf"
                   id="epf"
+                  value={newAllowance.epf}
                   onChange={(e: any) => checkboxChangeHandler(e, index)}
                 >
                   EPF/ETF
@@ -319,7 +388,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              100,000.00
+              {basicSalary == "" && "0.00"}
+              {basicSalary != "" && parseFloat(basicSalary).toFixed(2)}
             </Text>
           </Flex>
 
@@ -329,7 +399,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              30,000.00
+              {grossEarnings == "" && "0.00"}
+              {grossEarnings != "" && parseFloat(grossEarnings).toFixed(2)}
             </Text>
           </Flex>
 
@@ -339,7 +410,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              5,000.00
+              {grossDeductions == "" && "0.00"}
+              {grossDeductions != "" && parseFloat(grossDeductions).toFixed(2)}
             </Text>
           </Flex>
 
@@ -349,7 +421,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              8,800.00
+              {totalOfEPFAllowed == "" && "0.00"}
+              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 8 / 100 ).toFixed(2)}
             </Text>
           </Flex>
         </Box>
@@ -391,7 +464,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              13,200.00
+              {totalOfEPFAllowed == "" && "0.00"}
+              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 12 / 100 ).toFixed(2)}
             </Text>
           </Flex>
 
@@ -401,7 +475,8 @@ function App() {
             </Text>
             <Spacer />
             <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              3,300.00
+            {totalOfEPFAllowed == "" && "0.00"}
+              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 3 / 100 ).toFixed(2)}
             </Text>
           </Flex>
 
