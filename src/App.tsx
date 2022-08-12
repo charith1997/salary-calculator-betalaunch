@@ -17,6 +17,14 @@ import resetIcon from "./assets/reset_icon.png";
 import closeIcon from "./assets/close_icon.png";
 import addIcon from "./assets/add_icon.png";
 import { useState } from "react";
+import BasicSalary from "./components/BasicSalary";
+import GrossEarnings from "./components/GrossEarnings";
+import GrossDeduction from "./components/GrossDeduction";
+import EmployeeEPF8 from "./components/EmplyeeEPF8";
+import NetSalary from "./components/NetSalary";
+import EmployeeEPF12 from "./components/EmployeeEPF12";
+import EmployeeEPF3 from "./components/EmployeeEPF3";
+import CostOfCompany from "./components/CostOfCompany";
 
 function App() {
   const [allowances, setAllowances] = useState([{ allowance: "", epf: false }]);
@@ -25,9 +33,6 @@ function App() {
   const [grossEarnings, setGrossEarning] = useState("");
   const [grossDeductions, setGrossDeductions] = useState("");
   const [totalOfEPFAllowed, setTotalOfEPFAllowed] = useState("");
-
-  console.log(basicSalary, "basicSalary");
-  console.log(totalOfEPFAllowed, "totalOfEPFAllowed");
 
   const addNewAllowanceHandler = () => {
     setAllowances([...allowances, { allowance: "", epf: false }]);
@@ -382,49 +387,16 @@ function App() {
             </Text>
           </Flex>
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Basic Salary
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              {basicSalary == "" && "0.00"}
-              {basicSalary != "" && parseFloat(basicSalary).toFixed(2)}
-            </Text>
-          </Flex>
+          <BasicSalary basicSalary={basicSalary} />
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Gross Earning
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              {grossEarnings == "" && "0.00"}
-              {grossEarnings != "" && parseFloat(grossEarnings).toFixed(2)}
-            </Text>
-          </Flex>
+          <GrossEarnings grossEarnings={grossEarnings} />
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Gross Deduction
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              {grossDeductions == "" && "0.00"}
-              {grossDeductions != "" && parseFloat(grossDeductions).toFixed(2)}
-            </Text>
-          </Flex>
+          <GrossDeduction grossDeductions={grossDeductions} />
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Employee EPF (8%)
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              {totalOfEPFAllowed == "" && "0.00"}
-              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 8 / 100 ).toFixed(2)}
-            </Text>
-          </Flex>
+          <EmployeeEPF8
+            basicSalary={basicSalary}
+            totalOfEPFAllowed={totalOfEPFAllowed}
+          />
         </Box>
 
         <Box
@@ -435,15 +407,12 @@ function App() {
           padding={3}
           mx={5}
         >
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"600"} fontSize={"16px"}>
-              Net Salary (Take Home)
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              116,200.00
-            </Text>
-          </Flex>
+          <NetSalary
+            basicSalary={basicSalary}
+            grossEarnings={grossEarnings}
+            grossDeductions={grossDeductions}
+            totalOfEPFAllowed={totalOfEPFAllowed}
+          />
         </Box>
 
         <Box padding={8}>
@@ -458,37 +427,22 @@ function App() {
             </Text>
           </Flex>
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Employeer EPF (12%)
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              {totalOfEPFAllowed == "" && "0.00"}
-              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 12 / 100 ).toFixed(2)}
-            </Text>
-          </Flex>
+          <EmployeeEPF12
+            totalOfEPFAllowed={totalOfEPFAllowed}
+            basicSalary={basicSalary}
+          />
 
-          <Flex>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              Employeer ETF (3%)
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-            {totalOfEPFAllowed == "" && "0.00"}
-              {totalOfEPFAllowed != "" && ((parseFloat(basicSalary) + parseFloat(totalOfEPFAllowed)) * 3 / 100 ).toFixed(2)}
-            </Text>
-          </Flex>
+          <EmployeeEPF3
+            basicSalary={basicSalary}
+            totalOfEPFAllowed={totalOfEPFAllowed}
+          />
 
-          <Flex mt={4}>
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              CTC (Cost to Company)
-            </Text>
-            <Spacer />
-            <Text fontFamily={"inter"} fontWeight={"400"} fontSize={"16px"}>
-              141,500.00
-            </Text>
-          </Flex>
+          <CostOfCompany
+            totalOfEPFAllowed={totalOfEPFAllowed}
+            grossDeductions={grossDeductions}
+            grossEarnings={grossEarnings}
+            basicSalary={basicSalary}
+          />
         </Box>
       </Box>
     </Flex>
