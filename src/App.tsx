@@ -30,9 +30,9 @@ function App() {
   const [allowances, setAllowances] = useState([{ allowance: "", epf: false }]);
   const [deductions, setDeductions] = useState([{ deduction: "" }]);
   const [basicSalary, setBasicSalary] = useState("");
-  const [grossEarnings, setGrossEarning] = useState("");
-  const [grossDeductions, setGrossDeductions] = useState("");
-  const [totalOfEPFAllowed, setTotalOfEPFAllowed] = useState("");
+  const [grossEarnings, setGrossEarning] = useState("0.00");
+  const [grossDeductions, setGrossDeductions] = useState("0.00");
+  const [totalOfEPFAllowed, setTotalOfEPFAllowed] = useState("0.00");
 
   const addNewAllowanceHandler = () => {
     setAllowances([...allowances, { allowance: "", epf: false }]);
@@ -135,6 +135,15 @@ function App() {
     setTotalOfEPFAllowed(totalAllowedEPF);
   };
 
+  const resetHandler = () => {
+    setBasicSalary("");
+    setAllowances([{ allowance: "", epf: false }]);
+    setDeductions([{ deduction: "" }]);
+    setGrossEarning("");
+    setGrossDeductions("");
+    setTotalOfEPFAllowed("");
+  };
+
   return (
     <Flex padding={"100"}>
       <Box
@@ -152,12 +161,14 @@ function App() {
               Calculate Your Salary
             </Text>
             <Spacer />
-            <HStack>
-              <Image src={resetIcon} w={"21px"} h={"18px"} />
-              <Text fontFamily={"inter"} fontSize={"14px"} color={"#0052EA"}>
-                Reset
-              </Text>
-            </HStack>
+            <button type="button" onClick={resetHandler}>
+              <HStack>
+                <Image src={resetIcon} w={"21px"} h={"18px"} />
+                <Text fontFamily={"inter"} fontSize={"14px"} color={"#0052EA"}>
+                  Reset
+                </Text>
+              </HStack>
+            </button>
           </Flex>
 
           <FormControl mt={4}>
